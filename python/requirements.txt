@@ -1,0 +1,2 @@
+coincurve==21.0.0
+pycryptodome==4.2.0

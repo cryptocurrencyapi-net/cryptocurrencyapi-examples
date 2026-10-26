@@ -1,0 +1,10 @@
+{
+    "require": {
+        "php": ">=7.4",
+        "ext-gmp": "*",
+        "ext-sodium": "*",
+        "ext-curl": "*",
+        "simplito/elliptic-php": "^1.0",
+        "kornrunner/keccak": "^1.1"
+    }
+}

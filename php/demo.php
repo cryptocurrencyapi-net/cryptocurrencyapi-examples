@@ -51,7 +51,8 @@ if ($prepared === null) exit(1);
 $signatures = Sign::signHashes($chain, $prepared['hashes'], $sender['private_key']);
 echo "\nsignatures: ", json_encode($signatures, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), "\n";
 
-// 4. Send. A 503 with values.txid means the outcome is unknown: look that txid up with
+// 4. Send. A 504 broadcast_unknown means the outcome is unknown: look values.txid up with
 // getTransactionByHash and repeat this same request if need be, but do not prepare the payment
-// again, that could pay twice
+// again, that could pay twice. A 503 broadcast_failed means no node got the transaction:
+// repeating the request or preparing the payment again is safe
 api_call($chain, 'sendPreparedTransaction', ['tx_id' => $prepared['tx_id'], 'signatures' => $signatures]);

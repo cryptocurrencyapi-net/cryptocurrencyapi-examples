@@ -82,9 +82,12 @@ Here `need` is the gas plus 1 wei: the smallest balance that leaves something to
 Success is the HTTP status, and the body holds only data: `sendPreparedTransaction` answers `{"result": "<txid>"}`.
 A refusal is `{"error": <code>, "values": {...}}`.
 
-**`503` with `values.txid`** means the outcome is unknown: a node that did not answer may have taken the transaction.
-Look the txid up with `getTransactionByHash`. Repeating the same `sendPreparedTransaction` request is safe, but do not
-prepare the payment again: that could pay twice.
+**`504 broadcast_unknown`** means the outcome is unknown: a node that did not answer may have taken the transaction.
+Look `values.txid` up with `getTransactionByHash`. Repeating the same `sendPreparedTransaction` request is safe, but do
+not prepare the payment again: that could pay twice.
+
+**`503 broadcast_failed`** means no node got the transaction: repeating the request or preparing the payment again is
+safe.
 
 XRP and TON need the sender's `public_key` in `prepareTransaction`, and the demo passes it. On XRP it is part of what
 gets signed. On TON the first send from an address deploys the wallet contract, which is built from the key.
